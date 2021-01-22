@@ -3,6 +3,9 @@
 #define COMMENTS_LED 0
 
 #include "element.h"
+#include "templates.h"
+
+#define OUTPUT 0
 
 class led : public element {
 private:
@@ -16,10 +19,10 @@ public:
         pinMode(pin_, OUTPUT);
     }
 
-    void off() override {
+    void off() const override {
         digitalWrite(pin, 0);
     }
-    void on(int t = 0) override {
+    void on(int t = 0) const override  {
         digitalWrite(pin, 1);
         if (t == 0) return;
         delay(100 * t);
@@ -30,7 +33,7 @@ public:
         #if(COMMENTS_LED == 1)
         cout << "Dziala destruktor klasy led\n";
         #endif
-        if(soft_pwm = false) {
+        if(soft_pwm == false) {
             digitalWrite(pin, 0);
         }
         else {
@@ -46,6 +49,9 @@ public:
             exit(1);
         }
     }
+    template <size_t N>
+    friend void start_blink(const array<led, N> &led, leds_state<N> &kit, double (*f)(double ) , int );
+
 };
 
 #endif // LED.H

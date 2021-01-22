@@ -3,17 +3,20 @@
 
 #include <array>
 #include <iostream>
+#include "templates.h"
 
 using namespace std;
 
 enum direction {left, right};
 
 template <size_t K>
-struct leds_state{
+class leds_state{
+private:
     array<int, K> power;
     direction dir;
     int M; //max power
     int peak;
+public:
     leds_state() {
         for(size_t i = 0; i < K; i++) {
             power[i] = static_cast<int>(i);
@@ -27,6 +30,9 @@ struct leds_state{
             cout << power[i] << " ";
         }
         cout << endl;
+    }
+    double Power(int k) {
+        return power[k] * 100.0 / M;
     }
     void next_state() {
         for(size_t i = 0; i < K; i++) {
@@ -50,7 +56,8 @@ struct leds_state{
             power[static_cast<size_t> (peak-1)] = M;
             peak--;
         }
-
     }
+    template <size_t N>
+    friend void start_blink(const array<led, N> &led, leds_state<N> &kit, double (*f)(double ) , int );
 };
 #endif
