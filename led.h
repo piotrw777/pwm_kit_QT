@@ -5,16 +5,17 @@
 #include "element.h"
 
 class led : public element {
+private:
+    static const int PWM_Range = 100;
+    bool soft_pwm;
 public:
-    led(int pin_) : element(pin_) {
+    led(int pin_) : element(pin_), soft_pwm(false) {
         #if(COMMENTS_LED == 1)
         cout << "Dziala konstruktor klasy led\n";
         #endif
         pinMode(pin_, OUTPUT);
     }
-    led(int pin_, bool soft_pwm) {
 
-    }
     void off() override {
         digitalWrite(pin, 0);
     }
@@ -29,7 +30,21 @@ public:
         #if(COMMENTS_LED == 1)
         cout << "Dziala destruktor klasy led\n";
         #endif
-        digitalWrite(pin, 0);
+        if(soft_pwm = false) {
+            digitalWrite(pin, 0);
+        }
+        else {
+            softPwmWrite(pin, 0);
+        }
+    }
+    void prepare_soft_pwm() {
+        soft_pwm = true;
+        int soft_pwm_check;
+        soft_pwm_check = softPwmCreate(pin, 0, PWM_Range);
+        if (soft_pwm_check != 0) {
+            cout << "Soft PWM Error";
+            exit(1);
+        }
     }
 };
 
