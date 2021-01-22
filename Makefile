@@ -1,7 +1,6 @@
 CC = g++
 FLAGS := -g -pthread -O2 -Wpedantic -Wall -pedantic-errors -std=c++17
-#LIBS := -lwiringPi -lpthread
-LIBS := -lpthread
+LIBS := -lwiringPi -lpthread
 OUT = prog.out
 
 SRC = $(wildcard *.cpp)

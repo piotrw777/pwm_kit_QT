@@ -5,8 +5,6 @@
 #include "element.h"
 #include "templates.h"
 
-#define OUTPUT 0
-
 class led : public element {
 private:
     static const int PWM_Range = 100;

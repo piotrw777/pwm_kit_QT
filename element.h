@@ -3,7 +3,7 @@
 
 #define COMMENTS_ELEMENT 0
 #include <iostream>
-#include "wiringPi.h"
+#include <wiringPi.h>
 using namespace std;
 
 class element {
@@ -34,8 +34,8 @@ protected:
 
 public:
     static int nr_elements() { return liczba_elementow;}
-    virtual void on(int t = 0) const{};
-    virtual void off() const {};
+    virtual void on(int  = 0) const {}
+    virtual void off() const {}
     virtual ~element(){ 
         #if(COMMENTS_ELEMENT == 1)
         cout << "Dziala destruktor klasy element\n"; 
